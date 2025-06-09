@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Py-No-Copy-Bypass Demo</title>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Block mouse events on this div */
+        #no-click {
+            pointer-events: none;
+            background: #eee;
+            padding: 1em;
+            margin: 1em 0;
+        }
+
+        /* Hide selection cursor */
+        ::selection {
+            background: transparent;
+        }
+    </style>
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Disable copy via JS listener
+        document.addEventListener('copy', e => {
+            e.preventDefault();
+            alert("Copying is disabled!");
+        });
+
+        // Disable keyboard shortcuts (Ctrl+C, Cmd+C)
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+                e.preventDefault();
+                alert("Keyboard copy disabled!");
+            }
+        });
+    </script>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+
+    <h1>Py-No-Copy-Bypass Demo Page</h1>
+
+    <p>
+        Try to select or copy this text. All the usual tricks—CSS <code>user-select: none</code>,
+        pointer-events blocking, inline <code>oncopy=”…”</code> handlers, JS listeners for
+        copy/contextmenu, plus keyboard hook—are in place.
+    </p>
+
+    <div id="no-click">
+        This entire box has <code>pointer-events: none</code>, so you can't even click or select it.
+    </div>
+
+    <p contenteditable="false">
+        Even though this paragraph is rendered normally, it's marked
+        <code>contenteditable="false"</code> to block built-in copy shortcuts on some browsers.
+    </p>
+
+    <p style="user-select: none;">
+        This one has inline CSS <code>user-select: none</code>.
+    </p>
+
+    <p oncontextmenu="return false;">
+        Tried to right-click here? The inline <code>oncontextmenu</code> will refuse it.
+    </p>
+
+    <p>
+        You can test more by viewing page source or saving the page; but every
+        layer you try to bypass, the page fights back!
+    </p>
+</body>
+</html>

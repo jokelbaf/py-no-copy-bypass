@@ -1,0 +1,9 @@
+[project]
+name = "py-no-copy-bypass"
+version = "0.1.0"
+description = "Quick and easy proxy to bypass copy protection on any website."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mitm>=1.5.0",
+]
